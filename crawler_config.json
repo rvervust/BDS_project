@@ -1,0 +1,14 @@
+{
+  "searchByTags": {
+    "tags": ["#COVID19", "#blijfinuwkot"],
+    "dates": [],
+    "languages": ["en","nl"],
+    "output_dir": "tweets/tweetsByTags/"
+  },
+  "searchByHandles": {
+    "handles": ["@Bart_DeWever"],
+    "dates": [],
+    "languages": ["en","nl"],
+    "output_dir": "tweets/tweetsByHandles/"
+  }
+}

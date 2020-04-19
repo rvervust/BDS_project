@@ -17,7 +17,7 @@ class twitter_client(object):
             cf = json.load(f)
             auth = tweepy.OAuthHandler(cf['consumer_key'], cf['consumer_secret'])
             auth.set_access_token(cf['access_token'], cf['access_token_secret'])
-            self.api = tweepy.API(auth)
+            self.api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 
     def get_tweets_by_tag(self, tag, since=None, until=None, count=100, lang="nl"):
         """
@@ -29,6 +29,7 @@ class twitter_client(object):
         :param lang: the tweet language to be filtered on
         :return: DataFrame containing al tweets (a tweet per row)
         """
+        print(tag,since,until,count,lang)
         rows = []
         for tweet in tweepy.Cursor(self.api.search, q=tag, count=count,
                                    lang=lang,
@@ -62,6 +63,6 @@ class twitter_client(object):
 
 if __name__ == '__main__':
     twitter = twitter_client()
-    df = twitter.get_tweets_by_handle('@Bart_DeWever')
+    df = twitter.get_tweets_by_tag('#blijfinuwkot', since='2020-04-19', until='2020-04-20',lang='nl')
+    print(df.head())
 
-    df.to_csv('tweets_BDWV.csv')
