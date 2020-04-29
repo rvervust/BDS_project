@@ -14,19 +14,27 @@ class Crawler(object):
             self.tag_queue = []
             tags = cf['searchByTags']['tags']
             dates = cf['searchByTags']['dates']
+            geocode = cf['searchByTags']['geocode']
+            formatted_dates = []
             # If no dates specified, add each day of the last week
             if len(dates) == 0:
                 for i in range(7):
                     from_date = datetime.datetime.now() - datetime.timedelta(days=i)
                     until_date = from_date + datetime.timedelta(days=1)
-                    dates.append({'from': from_date.strftime('%Y-%m-%d'), 'until': until_date.strftime('%Y-%m-%d')})
+                    formatted_dates.append({'from': from_date.strftime('%Y-%m-%d'), 'until': until_date.strftime('%Y-%m-%d')})
+            else:
+                for date_string in dates:
+                    print(date_string)
+                    until_date = datetime.datetime.strptime(date_string, '%Y-%m-%d')
+                    from_date = until_date - datetime.timedelta(days=1)
+                    formatted_dates.append({'from': from_date.strftime('%Y-%m-%d'), 'until': until_date.strftime('%Y-%m-%d')})
             languages = cf['searchByTags']['languages']
 
             # Create grid search queue
             for tag in tags:
-                for date in dates:
+                for date in formatted_dates:
                     for lang in languages:
-                        params = {'tag': tag, 'since': date['from'], 'until': date['until'], 'lang': lang}
+                        params = {'tag': tag, 'since': date['from'], 'until': date['until'], 'lang': lang, 'geocode': geocode}
                         self.tag_queue.append(params)
 
             self.tag_output = cf['searchByTags']['output_dir']
@@ -85,4 +93,4 @@ class Crawler(object):
 if __name__ == '__main__':
     twitter = twitter.twitter_client()
     crawler = Crawler(twitter)
-    crawler.run_tag_jobs()
+    crawler.run_handle_jobs()

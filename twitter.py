@@ -19,7 +19,7 @@ class twitter_client(object):
             auth.set_access_token(cf['access_token'], cf['access_token_secret'])
             self.api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 
-    def get_tweets_by_tag(self, tag, since=None, until=None, count=100, lang="nl"):
+    def get_tweets_by_tag(self, tag, since=None, until=None, count=100, lang="nl", geocode=None):
         """
         Retrieve tweets by a given hashtag
         :param tag: the hashtag (including #)
@@ -34,14 +34,15 @@ class twitter_client(object):
         for tweet in tweepy.Cursor(self.api.search, q=tag, count=count,
                                    lang=lang,
                                    since=since,
-                                   until=until).items():
+                                   until=until,
+                                   geocode=geocode).items():
             rows.append(
                 [tweet.id_str, tweet.created_at, tweet.user.name, tweet.text.replace('\n', ' '), tweet.user.location,
                  "|".join([x['text'] for x in tweet.entities['hashtags']])])
 
         return pd.DataFrame(rows, columns=['tweet_id', 'created_at', 'name', 'text', 'location', 'tags'])
 
-    def get_tweets_by_handle(self, handle, since=None, until=None, count=100):
+    def get_tweets_by_handle(self, handle, since=None, until=None, count=100, lang="nl"):
         """
         Retrieve tweets by a given user handle
         :param handle: The user handle (including @)
@@ -52,8 +53,10 @@ class twitter_client(object):
         """
         rows = []
         for tweet in self.api.user_timeline(screen_name=handle, count=count, include_rts=False, tweet_mode="extended",
+                                            lang=lang,
                                             since=since,
-                                            until=until):
+                                            until=until,
+                                            place_country='BE'):
             rows.append(
                 [tweet.id_str, tweet.created_at, tweet.user.name, tweet.full_text.replace('\n', ' '), tweet.user.location,
                  "|".join([x['text'] for x in tweet.entities['hashtags']])])
