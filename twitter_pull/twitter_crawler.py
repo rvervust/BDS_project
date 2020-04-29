@@ -1,4 +1,4 @@
-import twitter
+from twitter_pull import twitter
 import json
 import datetime
 import os

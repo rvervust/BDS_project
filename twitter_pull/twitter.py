@@ -8,7 +8,7 @@ class twitter_client(object):
     This class handles the connection to the Twitter API, it provides a high level access to tweet retrieval
     """
 
-    def __init__(self, config="twitter_config.json"):
+    def __init__(self, config="../twitter_config.json"):
         """
         Initiate the client, using the api keys in a specified config file
         :param config: json file with Twitter credentials
