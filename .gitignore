@@ -2,3 +2,5 @@
 venv/
 twitter_config.json
 .idea\
+/spark/
+/data/book_reviews/
