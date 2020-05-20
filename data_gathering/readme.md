@@ -2,9 +2,8 @@
 
 This directory contains the code used for data gathering.
 The folder structure is as follows:
- 
- - data/ contains some of the gathered datasets. The gathered twitter data can be downloaded here:  https://1drv.ms/u/s!AhH4j1tznDIOlZ8iJkMTi94B0RN_1g?e=3JQdMT
- - twitter_pull/ contains a python script to gather past twitter tweets based on a given keyword and date
+
+- twitter_pull/ contains a python script to gather past twitter tweets based on a given keyword and date
  - twitter_stream/ contains a python script to setup a connection to twitter and receive tweets via stream based on keywords
  - The ScrapingLottoFinal notebook contains the code used to scrape the data related to EuroMillions
  
