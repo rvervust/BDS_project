@@ -14,6 +14,6 @@ The PowerBI files are provided in this repository, but they will also be used in
 ## Project Structure
 In this project you will find the following:
 
- - Jupyter notebooks (and related html files) explaining our data processing methods
- - PowerBI files used for visualization
- - Additional python scripts for gathering data (more info in their respective folders)
+ - **data_processing/**: Jupyter notebooks (and related html files) explaining our data processing methods
+ - **demo/**: The end product, PowerBI files used for visualization
+ - **data_gathering/**: Additional python scripts for gathering data (more info in their respective folders)
